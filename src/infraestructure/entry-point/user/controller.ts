@@ -1,58 +1,52 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { UserUseCase } from '../../../domain/usecases/user/user.usecase';
-import { BussinesException } from '../../../domain/model/exceptions/bussines.exception';
-import { TechnicalException } from '../../../domain/model/exceptions/technical.exception';
 
 export class UserController {
-    constructor(private readonly useuserUseCase: UserUseCase) {}
+    constructor(private readonly userUseCase: UserUseCase) {
+        this.getAll = this.getAll.bind(this);
+        this.getOne = this.getOne.bind(this);
+        this.create = this.create.bind(this);
+        this.update = this.update.bind(this);
+        this.delete = this.delete.bind(this);
+    }
 
-    async getAll(req: Request, res: Response) {
-        this.useuserUseCase
+    async getAll(req: Request, res: Response, next: NextFunction) {
+        this.userUseCase
             .getAll()
             .then((users) => res.status(200).json(users))
-            .catch((error) => this.handlerError(error, res));
+            .catch((err) => next(err));
     }
 
-    async getOne(req: Request, res: Response) {
+    async getOne(req: Request, res: Response, next: NextFunction) {
         const id = req.params.id;
-        this.useuserUseCase
+        this.userUseCase
             .getOne(id)
             .then((user) => res.status(200).json(user))
-            .catch((error) => this.handlerError(error, res));
+            .catch((err) => next(err));
     }
 
-    async create(req: Request, res: Response) {
-            const user = req.body;
-            this.useuserUseCase
-                .create(user)
-                .then((user) => res.status(201).json(user))
-                .catch((error) => this.handlerError(error, res));
+    async create(req: Request, res: Response, next: NextFunction) {
+        const user = req.body;
+        this.userUseCase
+            .create(user)
+            .then((user) => res.status(201).json(user))
+            .catch((err) => next(err));
     }
 
-    async update(req: Request, res: Response) {
+    async update(req: Request, res: Response, next: NextFunction) {
         const id = req.params.id;
         const user = req.body;
-        this.useuserUseCase
+        this.userUseCase
             .update(id, user)
             .then((user) => res.status(200).json(user))
-            .catch((error) => this.handlerError(error, res));
+            .catch((err) => next(err));
     }
 
-    async delete(req: Request, res: Response) {
+    async delete(req: Request, res: Response, next: NextFunction) {
         const id = req.params.id;
-        this.useuserUseCase
+        this.userUseCase
             .delete(id)
             .then(() => res.status(204).send())
-            .catch((error) => this.handlerError(error, res));
+            .catch((err) => next(err));
     }
-
-    private readonly handlerError = (error: any, res: Response) => {
-        if (error instanceof BussinesException)
-            return res.status(error.statusCode).json({ error: error.message });
-        console.log(error, 'este error');
-        if (error instanceof TechnicalException) {
-            return res.status(error.statusCode).json({ error: error.message });
-        }
-        return res.status(500).json({ error: 'Internal server error' });
-    };
 }

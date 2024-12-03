@@ -1,12 +1,13 @@
-import { UserDto } from '../../../database/models/user.model';
-import { BussinesException } from '../../domain/model/exceptions/bussines.exception';
-import { TechnicalException } from '../../domain/model/exceptions/technical.exception';
-import { UserGateway } from '../../domain/model/user/gateway/user.gateway';
-import { User } from '../../domain/model/user/user.model';
+import { UserDto } from '../../../../database/models/user.model';
+import { BussinesException } from '../../../domain/model/exceptions/bussines.exception';
+import { TechnicalException } from '../../../domain/model/exceptions/technical.exception';
+import { UserGateway } from '../../../domain/model/user/gateway/user.gateway';
+import { User } from '../../../domain/model/user/user.model';
+import { CreateUserDto } from './dto/create-user.dto';
 
 export class UserAdpterMongoRepository implements UserGateway {
-  
-    async saveUser(user: User): Promise<User> {
+    async saveUser(createUserDto: CreateUserDto): Promise<User> {
+        const user = CreateUserDto.fromObject(createUserDto);
         const { email, password } = user;
 
         const userExist = await UserDto.findOne({ email });
@@ -25,7 +26,7 @@ export class UserAdpterMongoRepository implements UserGateway {
             await userDto.save();
 
             const savedUser = await userDto.save();
-            return User.fromObject(savedUser);
+            return User.fromObject(savedUser.toJSON());
         } catch (error) {
             throw TechnicalException.internalServerError(`Error: ${error}`);
         }
@@ -38,7 +39,7 @@ export class UserAdpterMongoRepository implements UserGateway {
         if (!updatedUser) {
             throw BussinesException.notFound(`User wiht id: ${id} not found`);
         }
-        return User.fromObject(updatedUser);
+        return User.fromObject(updatedUser.toJSON());
     }
 
     async deleteUser(id: string): Promise<boolean> {

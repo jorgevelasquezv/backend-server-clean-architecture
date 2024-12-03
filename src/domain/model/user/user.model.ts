@@ -40,10 +40,6 @@ export class User {
             throw new Error('User email is required');
         }
 
-        if (!password) {
-            throw new Error('User password is required');
-        }
-
         return new User(id, name, email, password, role, image, createByGoogle);
     }
 }

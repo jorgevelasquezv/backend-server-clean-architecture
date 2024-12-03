@@ -1,7 +1,8 @@
 import { UserUseCase } from './../../../domain/usecases/user/user.usecase';
-import { Router } from "express";
-import { UserController } from "./controller";
-import { UserAdpterMongoRepository } from '../../adapters/user-adapter.mongo';
+import { Router } from 'express';
+import { UserController } from './controller';
+import { UserAdpterMongoRepository } from '../../adapters/user/user-adapter.mongo';
+import { validateObjectId } from '../../middlewares/valid-id.middleware';
 
 export class UserRoutes {
     static get routes(): Router {
@@ -12,10 +13,10 @@ export class UserRoutes {
         const controller = new UserController(userUseCase);
 
         router.get('/', controller.getAll);
-        router.get('/:id', controller.getOne);
         router.post('/', controller.create);
-        router.put('/:id', controller.update);
-        router.delete('/:id', controller.delete);
+        router.get('/:id', validateObjectId, controller.getOne);
+        router.put('/:id', validateObjectId, controller.update);
+        router.delete('/:id', validateObjectId, controller.delete);
 
         return router;
     }

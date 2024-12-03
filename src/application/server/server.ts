@@ -1,6 +1,7 @@
 import express, { Router } from 'express';
 import path from 'path';
 import cors from 'cors';
+import { globalErrorHandler } from '../middlewares/global-error-handler.middleware';
 
 interface Options {
     port: number;
@@ -28,13 +29,16 @@ export class Server {
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(cors());
 
+        // Routes
+        this.app.use(this.routes);
+
+        // Middleware Global Handler Error
+        this.app.use(globalErrorHandler);
+
         // Public folder
         if (this.publicPath) {
             this.app.use(express.static(this.publicPath));
         }
-
-        // Routes
-        this.app.use(this.routes);
 
         // SPA
         this.app.get('*', (req, res) => {
