@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-import { bcryptadapter } from '../../src/config/bcrypt.adapter';
+import { bcryptadapter } from '../../src/application/config/bcrypt.adapter';
 
 interface IUserDto extends Document {
     // id: string;
@@ -30,11 +30,13 @@ const userSchema = new Schema<IUserDto>({
 
 userSchema.methods.encrypPassword = function (password: string): string {
     return bcryptadapter.hash(password);
-}
+};
 
-userSchema.methods.comparePassword = function (password: string): Promise<boolean> {
+userSchema.methods.comparePassword = function (
+    password: string
+): Promise<boolean> {
     return bcryptadapter.compare(password, this.password);
-}
+};
 
 userSchema.set('toJSON', {
     virtuals: true,

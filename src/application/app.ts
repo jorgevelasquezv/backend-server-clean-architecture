@@ -1,5 +1,5 @@
 import { MongoDataBase } from '../../database/mongo-database';
-import { envs } from '../config/envs';
+import { envs } from './config/envs';
 import { AppRoutes } from './server/routes';
 import { Server } from './server/server';
 
