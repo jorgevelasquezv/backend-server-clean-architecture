@@ -17,7 +17,7 @@ export class Hospital {
         );
     }
 
-    public fromObject(object: { [key: string]: any }): Hospital {
+    public static fromObject(object: { [key: string]: any }): Hospital {
         const { id, name, user, image } = object;
 
         if (!id) {

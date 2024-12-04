@@ -55,11 +55,11 @@ export class UserAdpterMongoRepository implements UserGateway {
         if (!userDto) {
             throw BussinesException.notFound(`User wiht id: ${id} not found`);
         }
-        return User.fromObject(userDto);
+        return User.fromObject(userDto.toJSON());
     }
 
     async getUsers(): Promise<User[]> {
         const usersDto = await UserDto.find();
-        return usersDto.map((userDto) => User.fromObject(userDto));
+        return usersDto.map((userDto) => User.fromObject(userDto.toJSON()));
     }
 }

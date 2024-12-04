@@ -2,7 +2,6 @@ import { Document, model, Schema } from "mongoose";
 
 
 interface IHospitalDto extends Document {
-    id: string;
     name: string;
     user: {
         type: Schema.Types.ObjectId;
@@ -13,7 +12,6 @@ interface IHospitalDto extends Document {
 }
 
 const hospitalSchema = new Schema<IHospitalDto>({
-    id: { type: String, required: true },
     name: { type: String, required: true },
     user: {
         type: Schema.Types.ObjectId,

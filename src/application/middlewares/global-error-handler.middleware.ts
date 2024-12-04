@@ -17,7 +17,7 @@ export function globalErrorHandler(
         return;
     }
 
-    console.log(err instanceof Error);
+    console.log(err);
     res.status(500).json({ error: 'Internal server error' });
 
     next();
