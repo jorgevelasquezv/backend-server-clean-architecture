@@ -1,11 +1,12 @@
+import { HospitalGateway } from '@domain/model/hospital/gateway/hospital-gateway';
 import { Error } from 'mongoose';
-import { HospitalDto } from '../../../../database/models/hospital.model';
-import { BussinesException } from '../../../domain/model/exceptions/bussines.exception';
-import { TechnicalException } from '../../../domain/model/exceptions/technical.exception';
-import { HospitalGateway } from '../../../domain/model/hospital/gateway/hospital-gateway';
-import { Hospital } from '../../../domain/model/hospital/hospital.model';
 import { CreateHospitalDto } from './dto/create-hospital.dto';
+import { Hospital } from '@domain/model/hospital/hospital.model';
+import { HospitalDto } from '@database/models/hospital.model';
+import { BussinesException } from '@domain/model/exceptions/bussines.exception';
+import { TechnicalException } from '@domain/model/exceptions/technical.exception';
 import { UpdateHospitalDto } from './dto/update-hospital.dto';
+
 
 export class HospitalAdapterMongoRepository implements HospitalGateway {
     async createHospital(

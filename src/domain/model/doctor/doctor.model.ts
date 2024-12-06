@@ -1,5 +1,5 @@
-import { User } from '../user/user.model';
-import { Hospital } from './../hospital/hospital.model';
+import { User } from '@domain/model/user/user.model';
+import { Hospital } from '@domain/model/hospital/hospital.model';
 
 export class Doctor {
     constructor(

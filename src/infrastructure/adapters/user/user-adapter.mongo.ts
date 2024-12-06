@@ -1,9 +1,9 @@
-import { UserDto } from '../../../../database/models/user.model';
-import { BussinesException } from '../../../domain/model/exceptions/bussines.exception';
-import { TechnicalException } from '../../../domain/model/exceptions/technical.exception';
-import { UserGateway } from '../../../domain/model/user/gateway/user.gateway';
-import { User } from '../../../domain/model/user/user.model';
-import { CreateUserDto } from './dto/create-user.dto';
+import { UserGateway } from "@domain/model/user/gateway/user.gateway";
+import { CreateUserDto } from "./dto/create-user.dto";
+import { User } from "@domain/model/user/user.model";
+import { UserDto } from "@database/models/user.model";
+import { BussinesException } from "@domain/model/exceptions/bussines.exception";
+import { TechnicalException } from "@domain/model/exceptions/technical.exception";
 
 export class UserAdpterMongoRepository implements UserGateway {
     async saveUser(createUserDto: CreateUserDto): Promise<User> {

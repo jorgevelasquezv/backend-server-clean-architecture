@@ -1,8 +1,8 @@
-import { UserUseCase } from './../../../domain/usecases/user/user.usecase';
 import { Router } from 'express';
+import { UserUseCase } from '@domain/usecases/user/user.usecase';
+import { UserAdpterMongoRepository } from '@infrastructure/adapters/user/user-adapter.mongo';
 import { UserController } from './controller';
-import { UserAdpterMongoRepository } from '../../adapters/user/user-adapter.mongo';
-import { validateObjectId } from '../../middlewares/valid-id.middleware';
+import { validateObjectId } from '@infrastructure/middlewares/valid-id.middleware';
 
 export class UserRoutes {
     static get routes(): Router {

@@ -1,7 +1,7 @@
 import express, { Router } from 'express';
 import path from 'path';
 import cors from 'cors';
-import { globalErrorHandler } from '../middlewares/global-error-handler.middleware';
+import { globalErrorHandler } from '@application/middlewares/global-error-handler.middleware';
 
 interface Options {
     port: number;

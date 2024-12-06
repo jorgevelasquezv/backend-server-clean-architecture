@@ -1,8 +1,8 @@
-import { NextFunction, Request, Response } from "express";
-import { HospitalUseCase } from "../../../domain/usecases/hospital/hospital.usecase";
+import { UserUseCase } from '@domain/usecases/user/user.usecase';
+import { NextFunction, Request, Response } from 'express';
 
-export class HospitalController{
-    constructor(private readonly hospitalUseCase: HospitalUseCase) {
+export class UserController {
+    constructor(private readonly userUseCase: UserUseCase) {
         this.getAll = this.getAll.bind(this);
         this.getOne = this.getOne.bind(this);
         this.create = this.create.bind(this);
@@ -11,40 +11,40 @@ export class HospitalController{
     }
 
     async getAll(req: Request, res: Response, next: NextFunction) {
-        this.hospitalUseCase
+        this.userUseCase
             .getAll()
-            .then((hospitals) => res.status(200).json(hospitals))
+            .then((users) => res.status(200).json(users))
             .catch((err) => next(err));
     }
 
     async getOne(req: Request, res: Response, next: NextFunction) {
         const id = req.params.id;
-        this.hospitalUseCase
+        this.userUseCase
             .getOne(id)
-            .then((hospital) => res.status(200).json(hospital))
+            .then((user) => res.status(200).json(user))
             .catch((err) => next(err));
     }
 
     async create(req: Request, res: Response, next: NextFunction) {
-        const hospital = req.body;
-        this.hospitalUseCase
-            .create(hospital)
-            .then((hospital) => res.status(201).json(hospital))
+        const user = req.body;
+        this.userUseCase
+            .create(user)
+            .then((user) => res.status(201).json(user))
             .catch((err) => next(err));
     }
 
     async update(req: Request, res: Response, next: NextFunction) {
         const id = req.params.id;
-        const hospital = req.body;
-        this.hospitalUseCase
-            .update(id, hospital)
-            .then((hospital) => res.status(200).json(hospital))
+        const user = req.body;
+        this.userUseCase
+            .update(id, user)
+            .then((user) => res.status(200).json(user))
             .catch((err) => next(err));
     }
 
     async delete(req: Request, res: Response, next: NextFunction) {
         const id = req.params.id;
-        this.hospitalUseCase
+        this.userUseCase
             .delete(id)
             .then(() => res.status(204).send())
             .catch((err) => next(err));

@@ -1,9 +1,10 @@
-import { DoctorDto } from '../../../../database/models/doctor.model';
-import { Doctor } from '../../../domain/model/doctor/doctor.model';
-import { DoctorGateway } from '../../../domain/model/doctor/gateway/doctor.gateway';
-import { BussinesException } from '../../../domain/model/exceptions/bussines.exception';
-import { TechnicalException } from '../../../domain/model/exceptions/technical.exception';
-import { CreateDoctorDto } from './create-doctor.dto';
+import { DoctorDto } from "@database/models/doctor.model";
+import { Doctor } from "@domain/model/doctor/doctor.model";
+import { DoctorGateway } from "@domain/model/doctor/gateway/doctor.gateway";
+import { BussinesException } from "@domain/model/exceptions/bussines.exception";
+import { CreateDoctorDto } from "./dto/create-doctor.dto";
+import { TechnicalException } from "@domain/model/exceptions/technical.exception";
+
 
 export class DoctorAdapterMongoRepository implements DoctorGateway {
     async getDoctorById(id: string): Promise<Doctor> {

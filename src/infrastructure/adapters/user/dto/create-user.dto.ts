@@ -1,4 +1,4 @@
-import { BussinesException } from '../../../../domain/model/exceptions/bussines.exception';
+import { BussinesException } from "@domain/model/exceptions/bussines.exception";
 
 export class CreateUserDto {
     constructor(

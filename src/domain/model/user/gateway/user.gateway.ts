@@ -1,4 +1,4 @@
-import { User } from "../user.model";
+import { User } from '@domain/model/user/user.model';
 
 export interface UserGateway {
     saveUser(user: User): Promise<User>;

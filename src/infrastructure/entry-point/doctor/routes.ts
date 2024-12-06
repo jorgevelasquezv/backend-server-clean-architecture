@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { DoctorUseCase } from "../../../domain/usecases/doctor/doctor.usecases";
+import { DoctorAdapterMongoRepository } from "@infrastructure/adapters/doctor/doctor-adapter.mongo";
+import { DoctorUseCase } from "@domain/usecases/doctor/doctor.usecases";
 import { DoctorController } from "./controller";
-import { validateObjectId } from "../../middlewares/valid-id.middleware";
-import { DoctorAdapterMongoRepository } from "../../adapters/doctor/doctor-adapter.mongo";
+import { validateObjectId } from "@infrastructure/middlewares/valid-id.middleware";
+
 
 export class DoctorRoutes{
     static get routes(){

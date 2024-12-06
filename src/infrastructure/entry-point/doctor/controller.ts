@@ -1,5 +1,5 @@
+import { DoctorUseCase } from "@domain/usecases/doctor/doctor.usecases";
 import { NextFunction, Request, Response } from "express";
-import { DoctorUseCase } from "../../../domain/usecases/doctor/doctor.usecases";
 
 export class DoctorController{
     constructor(private readonly doctorUseCase: DoctorUseCase){

@@ -1,4 +1,4 @@
-import { User } from "../user/user.model";
+import { User } from '@domain/model/user/user.model';
 
 export class Hospital {
     constructor(

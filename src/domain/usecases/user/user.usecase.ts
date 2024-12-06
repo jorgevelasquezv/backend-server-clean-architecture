@@ -1,5 +1,6 @@
-import { UserGateway } from "../../model/user/gateway/user.gateway";
-import { User } from "../../model/user/user.model";
+import { UserGateway } from "@domain/model/user/gateway/user.gateway";
+import { User } from "@domain/model/user/user.model";
+
 
 export class UserUseCase{
     constructor(private readonly userGateway: UserGateway) { }

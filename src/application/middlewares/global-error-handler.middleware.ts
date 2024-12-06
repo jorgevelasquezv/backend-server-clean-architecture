@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { BussinesException } from '../../domain/model/exceptions/bussines.exception';
-import { TechnicalException } from '../../domain/model/exceptions/technical.exception';
+import { BussinesException } from '@domain/model/exceptions/bussines.exception';
+import { TechnicalException } from '@domain/model/exceptions/technical.exception';
+
 
 export function globalErrorHandler(
     err: any,

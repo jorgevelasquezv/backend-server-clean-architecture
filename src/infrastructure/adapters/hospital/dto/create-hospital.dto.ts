@@ -1,5 +1,6 @@
-import { BussinesException } from '../../../../domain/model/exceptions/bussines.exception';
-import { User } from '../../../../domain/model/user/user.model';
+import { BussinesException } from "@domain/model/exceptions/bussines.exception";
+import { User } from "@domain/model/user/user.model";
+
 
 export class CreateHospitalDto {
     constructor(

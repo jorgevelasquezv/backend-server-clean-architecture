@@ -1,4 +1,4 @@
-import { Hospital } from '../hospital.model';
+import { Hospital } from '@domain/model/hospital/hospital.model';
 
 export interface HospitalGateway {
     createHospital(hospital: Hospital): Promise<Hospital>;

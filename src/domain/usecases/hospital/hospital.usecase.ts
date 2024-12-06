@@ -1,5 +1,6 @@
-import { HospitalGateway } from "../../model/hospital/gateway/hospital-gateway";
-import { Hospital } from "../../model/hospital/hospital.model";
+import { HospitalGateway } from "@domain/model/hospital/gateway/hospital-gateway";
+import { Hospital } from "@domain/model/hospital/hospital.model";
+
 
 export class HospitalUseCase{
     constructor(private readonly hospitalGateway: HospitalGateway) { }

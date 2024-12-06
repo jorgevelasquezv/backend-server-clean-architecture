@@ -1,4 +1,4 @@
-import { Doctor } from "../doctor.model";
+import { Doctor } from '@domain/model/doctor/doctor.model';
 
 export interface DoctorGateway {
     getDoctorById(id: string): Promise<Doctor>;
