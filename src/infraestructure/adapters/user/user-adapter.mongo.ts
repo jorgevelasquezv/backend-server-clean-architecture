@@ -23,8 +23,6 @@ export class UserAdpterMongoRepository implements UserGateway {
 
             userDto.password = await userDto.encrypPassword(password);
 
-            await userDto.save();
-
             const savedUser = await userDto.save();
             return User.fromObject(savedUser.toJSON());
         } catch (error) {
