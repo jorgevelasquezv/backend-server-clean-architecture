@@ -2,7 +2,6 @@ import { model, Schema } from 'mongoose';
 import { bcryptadapter } from '../../src/application/config/bcrypt.adapter';
 
 interface IUserDto extends Document {
-    // id: string;
     name: string;
     email: string;
     password: string;
@@ -14,9 +13,8 @@ interface IUserDto extends Document {
 }
 
 const userSchema = new Schema<IUserDto>({
-    // id: { type: String, required: true },
     name: { type: String, required: true },
-    email: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     role: {
         type: String,

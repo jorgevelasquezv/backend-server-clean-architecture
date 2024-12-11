@@ -1,9 +1,9 @@
-import { UserGateway } from "@domain/model/user/gateway/user.gateway";
-import { CreateUserDto } from "./dto/create-user.dto";
-import { User } from "@domain/model/user/user.model";
-import { UserDto } from "@database/models/user.model";
-import { BussinesException } from "@domain/model/exceptions/bussines.exception";
-import { TechnicalException } from "@domain/model/exceptions/technical.exception";
+import { UserGateway } from '@domain/model/user/gateway/user.gateway';
+import { User } from '@domain/model/user/user.model';
+import { BussinesException } from '@domain/model/exceptions/bussines.exception';
+import { TechnicalException } from '@domain/model/exceptions/technical.exception';
+import { UpdateUserDto, CreateUserDto } from './dto';
+import { UserDto } from '@database/models/user.model';
 
 export class UserAdpterMongoRepository implements UserGateway {
     async saveUser(createUserDto: CreateUserDto): Promise<User> {
@@ -30,14 +30,28 @@ export class UserAdpterMongoRepository implements UserGateway {
         }
     }
 
-    async updateUser(id: string, user: User): Promise<User> {
-        const updatedUser = await UserDto.findByIdAndUpdate(id, user, {
-            new: true,
-        });
-        if (!updatedUser) {
-            throw BussinesException.notFound(`User wiht id: ${id} not found`);
+    async updateUser(id: string, user: UpdateUserDto): Promise<User> {
+        try {
+            const updatedUser = await UserDto.findByIdAndUpdate(id, user, {
+                new: true,
+            });
+            if (!updatedUser) {
+                throw BussinesException.notFound(
+                    `User wiht id: ${id} not found`
+                );
+            }
+            return User.fromObject(updatedUser.toJSON());
+        } catch (error) {
+            if (
+                error instanceof Error &&
+                error.message.includes('E11000 duplicate key error')
+            ) {
+                throw BussinesException.conflict(
+                    `User with email: ${user.email} already exist`
+                );
+            }
+            throw TechnicalException.internalServerError(`Error: ${error}`);
         }
-        return User.fromObject(updatedUser.toJSON());
     }
 
     async deleteUser(id: string): Promise<boolean> {

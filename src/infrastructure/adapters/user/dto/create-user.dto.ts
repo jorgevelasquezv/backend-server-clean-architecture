@@ -30,7 +30,7 @@ export class CreateUserDto {
             name,
             email,
             password,
-            role = 'user',
+            role,
             image,
             createByGoogle,
         } = object;
