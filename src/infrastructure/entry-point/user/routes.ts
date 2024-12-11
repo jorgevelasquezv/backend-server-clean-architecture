@@ -14,6 +14,7 @@ export class UserRoutes {
 
         router.get('/', controller.getAll);
         router.post('/', controller.create);
+        router.post('/login', controller.login);
         router.get('/:id', validateObjectId, controller.getOne);
         router.put('/:id', validateObjectId, controller.update);
         router.delete('/:id', validateObjectId, controller.delete);

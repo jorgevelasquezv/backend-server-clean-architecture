@@ -29,5 +29,10 @@ export class UserUseCase{
         const deletedUser = await this.userGateway.deleteUser(id);
         return deletedUser;
     }
+
+    async login(login: {email: string, password: string}) {
+        const token = await this.userGateway.getUserByEmail(login.email, login.password);
+        return token;
+    }
     
 }

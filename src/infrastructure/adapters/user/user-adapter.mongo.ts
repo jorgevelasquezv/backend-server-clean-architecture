@@ -4,6 +4,7 @@ import { BussinesException } from '@domain/model/exceptions/bussines.exception';
 import { TechnicalException } from '@domain/model/exceptions/technical.exception';
 import { UpdateUserDto, CreateUserDto } from './dto';
 import { UserDto } from '@database/models/user.model';
+import { LoginUserDto } from './dto/login-user.dto';
 
 export class UserAdpterMongoRepository implements UserGateway {
     async saveUser(createUserDto: CreateUserDto): Promise<User> {
@@ -31,8 +32,9 @@ export class UserAdpterMongoRepository implements UserGateway {
     }
 
     async updateUser(id: string, user: UpdateUserDto): Promise<User> {
+        const userDto = UpdateUserDto.fromObject(user);
         try {
-            const updatedUser = await UserDto.findByIdAndUpdate(id, user, {
+            const updatedUser = await UserDto.findByIdAndUpdate(id, userDto, {
                 new: true,
             });
             if (!updatedUser) {
@@ -73,5 +75,25 @@ export class UserAdpterMongoRepository implements UserGateway {
     async getUsers(): Promise<User[]> {
         const usersDto = await UserDto.find();
         return usersDto.map((userDto) => User.fromObject(userDto.toJSON()));
+    }
+
+    async getUserByEmail(email: string, password: string): Promise<User> {
+        const loginUserDto = new LoginUserDto(email, password);
+
+        const existUser = await UserDto.findOne({ email: loginUserDto.email });
+
+        if (!existUser) {
+            throw BussinesException.notFound('Invalid email or password');
+        }
+
+        const validPassword = await existUser.comparePassword(
+            loginUserDto.password
+        );
+
+        if (!validPassword) {
+            throw BussinesException.notFound('Invalid email or password');
+        }
+
+        return User.fromObject(existUser.toJSON());
     }
 }
