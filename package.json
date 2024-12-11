@@ -4,9 +4,9 @@
     "description": "Backend with Typescript for course Angular pro Devtalles",
     "main": "index.js",
     "scripts": {
-        "build": "rimraf ./dist && tsc",
-        "start": "npm run build && node dist/app.js",
-        "dev": "npx nodemon",
+        "build": "rimraf ./dist && tsc && tsc-alias -p tsconfig.json",
+        "start": "npm run build && node dist/src/application/app.js",
+        "dev": "npx nodemon ",
         "test": "jest",
         "test:watch": "jest --watch",
         "test:cov": "jest --coverage"
@@ -18,27 +18,30 @@
     ],
     "author": "Jorge Luis Velásquez",
     "license": "MIT",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.7",
+        "env-var": "^7.5.0",
+        "express": "^4.21.2",
+        "express-validator": "^7.2.0",
+        "mongoose": "^8.8.4"
+    },
     "devDependencies": {
         "@types/bcryptjs": "^2.4.6",
         "@types/cors": "^2.8.17",
         "@types/express": "^5.0.0",
         "@types/jest": "^29.5.14",
-        "@types/node": "^22.10.1",
+        "@types/node": "^22.10.2",
         "@types/supertest": "^6.0.2",
         "jest": "^29.7.0",
         "nodemon": "^3.1.7",
         "rimraf": "^6.0.1",
         "supertest": "^7.0.0",
         "ts-jest": "^29.2.5",
+        "tsc-alias": "^1.8.10",
+        "tsconfig-paths": "^4.2.0",
         "typescript": "^5.7.2"
-    },
-    "dependencies": {
-        "bcryptjs": "^2.4.3",
-        "cors": "^2.8.5",
-        "dotenv": "^16.4.5",
-        "env-var": "^7.5.0",
-        "express": "^4.21.1",
-        "mongoose": "^8.8.3"
     },
     "jest": {
         "moduleFileExtensions": [
