@@ -43,6 +43,11 @@ export class CreateUserDto {
             throw BussinesException.badRequest('User email is required');
         }
 
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            throw BussinesException.badRequest('User email is not valid');
+        }
+
         if (!password) {
             throw BussinesException.badRequest('User password is required');
         }
