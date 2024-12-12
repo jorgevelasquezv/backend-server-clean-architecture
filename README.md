@@ -146,11 +146,7 @@ El patrón Adaptador se utiliza para desacoplar la lógica de negocio de la infr
 
 ### Variables de Entorno
 
-El proyecto utiliza variables de entorno para configurar diferentes aspectos de la aplicación. Las variables de entorno se definen en el archivo
-
-.env.template
-
-:
+El proyecto utiliza variables de entorno para configurar diferentes aspectos de la aplicación. Las variables de entorno se definen en el archivo `.env.template`:
 
 ```template
 PORT=3001
