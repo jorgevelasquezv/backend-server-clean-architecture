@@ -1,11 +1,9 @@
 import { UserGateway } from '@domain/model/user/gateway/user.gateway';
-import { User } from '@domain/model/user/user.model';
+import { User } from '@domain/model/user';
 import { BussinesException } from '@domain/model/exceptions/bussines.exception';
 import { TechnicalException } from '@domain/model/exceptions/technical.exception';
 import { UpdateUserDto, CreateUserDto } from './dto';
 import { UserDto } from '@database/models/user.model';
-import { LoginUserDto } from './dto/login-user.dto';
-
 export class UserAdpterMongoRepository implements UserGateway {
     async saveUser(createUserDto: CreateUserDto): Promise<User> {
         const user = CreateUserDto.fromObject(createUserDto);
@@ -75,25 +73,5 @@ export class UserAdpterMongoRepository implements UserGateway {
     async getUsers(): Promise<User[]> {
         const usersDto = await UserDto.find();
         return usersDto.map((userDto) => User.fromObject(userDto.toJSON()));
-    }
-
-    async getUserByEmail(email: string, password: string): Promise<User> {
-        const loginUserDto = new LoginUserDto(email, password);
-
-        const existUser = await UserDto.findOne({ email: loginUserDto.email });
-
-        if (!existUser) {
-            throw BussinesException.notFound('Invalid email or password');
-        }
-
-        const validPassword = await existUser.comparePassword(
-            loginUserDto.password
-        );
-
-        if (!validPassword) {
-            throw BussinesException.notFound('Invalid email or password');
-        }
-
-        return User.fromObject(existUser.toJSON());
     }
 }

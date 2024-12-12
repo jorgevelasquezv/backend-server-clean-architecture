@@ -6,5 +6,4 @@ export interface UserGateway {
     deleteUser(id: string): Promise<boolean>;
     getUserById(id: string): Promise<User>;
     getUsers(): Promise<User[]>;
-    getUserByEmail(email: string, password: string): Promise<User>;
 }

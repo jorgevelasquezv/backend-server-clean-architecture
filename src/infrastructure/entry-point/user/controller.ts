@@ -8,7 +8,6 @@ export class UserController {
         this.create = this.create.bind(this);
         this.update = this.update.bind(this);
         this.delete = this.delete.bind(this);
-        this.login = this.login.bind(this);
     }
 
     async getAll(req: Request, res: Response, next: NextFunction) {
@@ -48,14 +47,6 @@ export class UserController {
         this.userUseCase
             .delete(id)
             .then(() => res.status(204).send())
-            .catch((err) => next(err));
-    }
-
-    async login(req: Request, res: Response, next: NextFunction) {
-        const login = req.body;
-        this.userUseCase
-            .login(login)
-            .then((token) => res.status(200).json(token))
             .catch((err) => next(err));
     }
 }
