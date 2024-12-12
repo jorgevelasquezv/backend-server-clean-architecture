@@ -12,7 +12,7 @@ interface IHospitalDto extends Document {
 }
 
 const hospitalSchema = new Schema<IHospitalDto>({
-    name: { type: String, required: true },
+    name: { type: String, required: true, uppercase: true },
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User',

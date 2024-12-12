@@ -1,6 +1,5 @@
-import { BussinesException } from "@domain/model/exceptions/bussines.exception";
-import { User } from "@domain/model/user/user.model";
-
+import { BussinesException } from '@domain/model/exceptions/bussines.exception';
+import { User } from '@domain/model/user/user.model';
 
 export class CreateHospitalDto {
     constructor(
@@ -10,10 +9,12 @@ export class CreateHospitalDto {
     ) {}
 
     public static create(data: CreateHospitalDto): CreateHospitalDto {
-        return new CreateHospitalDto(data.name, data.user, data.image);
+        return this.fromObject(data);
     }
 
-    public static fromObject(object: { [key: string]: any }): CreateHospitalDto {
+    public static fromObject(object: {
+        [key: string]: any;
+    }): CreateHospitalDto {
         const { name, user, image } = object;
 
         if (!name) {

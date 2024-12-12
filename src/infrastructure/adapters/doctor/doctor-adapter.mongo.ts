@@ -5,6 +5,7 @@ import { BussinesException } from '@domain/model/exceptions/bussines.exception';
 import { TechnicalException } from '@domain/model/exceptions/technical.exception';
 import { HospitalDto } from '@database/models/hospital.model';
 import { CreateDoctorRequest, UpdateDoctorRequest } from '@domain/model/doctor';
+import { Error } from 'mongoose';
 
 export class DoctorAdapterMongoRepository implements DoctorGateway {
     async getDoctorById(id: string): Promise<Doctor> {
@@ -41,22 +42,22 @@ export class DoctorAdapterMongoRepository implements DoctorGateway {
     ): Promise<Doctor> {
         const { name } = createDoctorRequest;
 
-        const hospitalExist = await HospitalDto.findById(
-            createDoctorRequest.hospital
-        );
-        if (!hospitalExist) {
-            throw BussinesException.badRequest(
-                `Hospital with id: ${createDoctorRequest.hospital} not exist`
-            );
-        }
-
-        const doctorExist = await DoctorDto.findOne({ name });
-        if (doctorExist) {
-            throw BussinesException.conflict(
-                `Doctor with name: ${name} already exist`
-            );
-        }
         try {
+            const hospitalExist = await HospitalDto.findById(
+                createDoctorRequest.hospital
+            );
+            if (!hospitalExist) {
+                throw BussinesException.badRequest(
+                    `Hospital with id: ${createDoctorRequest.hospital} not exist`
+                );
+            }
+
+            const doctorExist = await DoctorDto.findOne({ name });
+            if (doctorExist) {
+                throw BussinesException.conflict(
+                    `Doctor with name: ${name} already exist`
+                );
+            }
             const doctorDto = new DoctorDto(createDoctorRequest);
             const savedDoctor = await doctorDto.save();
             const doctorResponse = await savedDoctor.populate([
@@ -65,6 +66,14 @@ export class DoctorAdapterMongoRepository implements DoctorGateway {
             ]);
             return Doctor.fromObject(doctorResponse.toJSON());
         } catch (error) {
+            if (error instanceof BussinesException) {
+                throw error;
+            }
+            if (error instanceof Error.CastError) {
+                throw BussinesException.badRequest(
+                    `Hospital id: ${createDoctorRequest.hospital} is invalid`
+                );
+            }
             throw TechnicalException.internalServerError(`Error: ${error}`);
         }
     }
