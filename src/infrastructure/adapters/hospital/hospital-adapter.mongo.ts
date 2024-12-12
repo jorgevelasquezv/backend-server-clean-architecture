@@ -26,11 +26,9 @@ export class HospitalAdapterMongoRepository implements HospitalGateway {
 
         try {
             const hospitalDto = new HospitalDto(hospital);
-
-            await hospitalDto.save();
-
             const savedHospital = await hospitalDto.save();
-            return Hospital.fromObject(savedHospital.toJSON());
+            const responseHospital = await savedHospital.populate('user');
+            return Hospital.fromObject(responseHospital.toJSON());
         } catch (error) {
             throw TechnicalException.internalServerError(`Error: ${error}`);
         }
@@ -47,7 +45,7 @@ export class HospitalAdapterMongoRepository implements HospitalGateway {
                 {
                     new: true,
                 }
-            );
+            ).populate('user');
 
             if (!updatedHospital) {
                 throw BussinesException.notFound(
@@ -57,6 +55,10 @@ export class HospitalAdapterMongoRepository implements HospitalGateway {
 
             return Hospital.fromObject(updatedHospital.toJSON());
         } catch (error) {
+            if (error instanceof BussinesException) {
+                throw error;
+            }
+
             if (error instanceof Error.CastError) {
                 throw BussinesException.badRequest(
                     `User id: ${updateHospitalDto.user} is invalid`

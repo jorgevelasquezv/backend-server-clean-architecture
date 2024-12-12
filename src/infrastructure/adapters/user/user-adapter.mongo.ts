@@ -42,6 +42,10 @@ export class UserAdpterMongoRepository implements UserGateway {
             }
             return User.fromObject(updatedUser.toJSON());
         } catch (error) {
+            if (error instanceof BussinesException) {
+                throw error;
+            }
+
             if (
                 error instanceof Error &&
                 error.message.includes('E11000 duplicate key error')

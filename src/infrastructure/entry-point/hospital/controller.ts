@@ -27,6 +27,7 @@ export class HospitalController{
 
     async create(req: Request, res: Response, next: NextFunction) {
         const hospital = req.body;
+        hospital.user = req.headers['user'];
         this.hospitalUseCase
             .create(hospital)
             .then((hospital) => res.status(201).json(hospital))

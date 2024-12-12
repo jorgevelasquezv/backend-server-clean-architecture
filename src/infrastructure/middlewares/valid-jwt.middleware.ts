@@ -14,7 +14,7 @@ export function validJwt(req: Request, res: Response, next: NextFunction) {
         return next(BussinesException.unauthorized('Invalid token'));
     }
 
-    req.body.id = paylod.id;
+    req.headers['user'] = paylod.id;
 
     next();
 }

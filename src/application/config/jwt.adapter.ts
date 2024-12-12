@@ -5,7 +5,7 @@ type JwtPayload = {
     id: string;
     iat: number;
     exp: number;
-}
+};
 
 const secret = envs.JWT_SECRET;
 const expiresIn = envs.JWT_EXPIRES;
@@ -16,6 +16,6 @@ export const jwtadpter = {
         return sign(payload, secret, { expiresIn });
     },
     verify: (token: string) => {
-        return verify(token, secret) as JwtPayload;
+        return verify(token, secret, { ignoreExpiration: false }) as JwtPayload;
     },
 };
