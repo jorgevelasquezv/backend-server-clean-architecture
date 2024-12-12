@@ -27,6 +27,7 @@ export class DoctorController{
 
     async create(req: Request, res: Response, next: NextFunction){
         const doctor = req.body;
+        doctor.user = req.headers['user'];
         this.doctorUseCase
             .create(doctor)
             .then((doctor) => res.status(201).json(doctor))
@@ -36,6 +37,7 @@ export class DoctorController{
     async update(req: Request, res: Response, next: NextFunction){
         const id = req.params.id;
         const doctor = req.body;
+        doctor.user = req.headers['user'];
         this.doctorUseCase
             .update(id, doctor)
             .then((doctor) => res.status(200).json(doctor))

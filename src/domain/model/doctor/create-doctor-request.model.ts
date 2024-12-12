@@ -1,15 +1,13 @@
-import { User } from "@domain/model/user/user.model";
-
-export class CreateDoctorDto {
+export class CreateDoctorRequest {
     constructor(
         public name: string,
-        public user: User,
+        public user: string,
         public hospital: string,
         public image?: string
     ) {}
 
-    static create(data: CreateDoctorDto): CreateDoctorDto {
-        return new CreateDoctorDto(
+    static create(data: CreateDoctorRequest): CreateDoctorRequest {
+        return new CreateDoctorRequest(
             data.name,
             data.user,
             data.hospital,
@@ -17,7 +15,7 @@ export class CreateDoctorDto {
         );
     }
 
-    static fromObject(obj: { [key: string]: any }): CreateDoctorDto {
+    static fromObject(obj: { [key: string]: any }): CreateDoctorRequest {
         const { name, user, hospital, image } = obj;
 
         if (!name) {
@@ -32,6 +30,6 @@ export class CreateDoctorDto {
             throw new Error('Doctor hospital is required');
         }
 
-        return new CreateDoctorDto(name, user, hospital, image);
+        return new CreateDoctorRequest(name, user, hospital, image);
     }
 }

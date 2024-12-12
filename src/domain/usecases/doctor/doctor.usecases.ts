@@ -1,4 +1,4 @@
-import { Doctor } from "@domain/model/doctor/doctor.model";
+import { CreateDoctorRequest, UpdateDoctorRequest } from "@domain/model/doctor";
 import { DoctorGateway } from "@domain/model/doctor/gateway/doctor.gateway";
 
 
@@ -15,13 +15,13 @@ export class DoctorUseCase {
         return doctor;
     }
 
-    async create(doctor: Doctor) {
-        const newDoctor = await this.doctorGateway.saveDoctor(doctor);
+    async create(createDoctorRequest: CreateDoctorRequest) {
+        const newDoctor = await this.doctorGateway.saveDoctor(createDoctorRequest);
         return newDoctor;
     }
 
-    async update(id: string, doctor: Doctor) {
-        const updatedDoctor = await this.doctorGateway.updateDoctor(id, doctor);
+    async update(id: string, updateDoctorRequest: UpdateDoctorRequest) {
+        const updatedDoctor = await this.doctorGateway.updateDoctor(id, updateDoctorRequest);
         return updatedDoctor;
     }
 
